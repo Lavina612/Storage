@@ -6,6 +6,7 @@ class Pallet : StorageUnit
 {
     private const int DefaultWeight = 30;
     private List<Box> boxes;
+
     public List<Box> Boxes
     {
         get
@@ -14,41 +15,17 @@ class Pallet : StorageUnit
         }
         set
         {
+            foreach (Box box in value)
+            {
+                if (box.Width > Width)
+                    throw new ArgumentOutOfRangeException(nameof(Width), $"Ширина коробки №{box.ID} не должна превышать ширину паллеты №{ID}.");
+                if (box.Depth > Depth)
+                    throw new ArgumentOutOfRangeException(nameof(Depth), $"Глубина коробки №{box.ID} не должна превышать глубину паллеты №{ID}.");
+            }
             boxes = value.Where(x => x != null).ToList();
         }
     }
-    public override double Width
-    {
-        get
-        {
-            return base.Width;
-        }
-        set
-        {
-            foreach (Box box in Boxes)
-            {
-                if (box.Width > Width)
-                    throw new InvalidDataException($"Ширина коробки №{box.ID} не должна превышать ширину паллеты №{ID}");
-                else base.Width = value;
-            }
-        }
-    }
-    public override double Depth
-    {
-        get
-        {
-            return base.Depth;
-        }
-        set
-        {
-            foreach (Box box in Boxes)
-            {
-                if (box.Depth > Depth)
-                    throw new InvalidDataException($"Глубина коробки №{box.ID} не должна превышать глубину паллеты №{ID}");
-                else base.Depth = value;
-            }
-        }
-    }
+
     public override double Weight
     {
         get
@@ -56,6 +33,7 @@ class Pallet : StorageUnit
             return Boxes.Select(x => x.Weight).Sum() + DefaultWeight;
         }
     }
+
     public override double Volume
     {
         get
@@ -63,6 +41,7 @@ class Pallet : StorageUnit
             return Weight * Height * Depth + Boxes.Select(x => x.Volume).Sum();
         }
     }
+
     public override DateOnly ExpirationDate
     {
         get
@@ -70,15 +49,24 @@ class Pallet : StorageUnit
             return Boxes.Select(x => x.ExpirationDate).DefaultIfEmpty().Min();
         }
         set
-        { }
+        {
+            throw new ArgumentOutOfRangeException(nameof(ExpirationDate), 
+                $"Срок годности паллеты №{ID} вычисляется автоматически на основе вложенных коробок, его нельзя изменить.");
+        }
     }
 
     public Pallet(int id, double width, double height, double depth, List<Box> boxes) 
         : base(id, width, height, depth)
     {
-        Boxes = boxes ?? [];
         Width = width;
         Depth = depth;
+        Boxes = boxes ?? [];
+    }
+
+    protected override void CheckSize(double size, string? paramName, string russianParamName)
+    {
+        if (size <= 0)
+            throw new ArgumentOutOfRangeException(paramName, $"Параметр \"{russianParamName}\" у палеты №{ID} должен быть положительным.");
     }
 
     public override string ToString()

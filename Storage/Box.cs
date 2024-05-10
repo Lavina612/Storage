@@ -1,19 +1,20 @@
 ﻿namespace Storage;
 
-class Box(int id, double width, double height, double depth, double weight, DateOnly productionDate) 
-    : StorageUnit(id, width, height, depth)
+class Box : StorageUnit
 {
-    public override double Weight { get; set; } = weight;
-    private DateOnly ProducationDate { get; set; } = productionDate;
+    private DateOnly ProducationDate { get; set; }
     private DateOnly expirationDate;
+
     public override DateOnly ExpirationDate
     {
         get
         {
-            return expirationDate > ProducationDate ? expirationDate : ProducationDate.AddDays(100);
+            return expirationDate == DateOnly.MinValue ? ProducationDate.AddDays(100) : expirationDate;
         }
         set
         {
+            if (value < ProducationDate)
+                throw new ArgumentOutOfRangeException(nameof(ExpirationDate), $"Срок годности коробки №{ID} не может быть меньше даты производства.");
             expirationDate = value;
         }
     }
@@ -24,6 +25,19 @@ class Box(int id, double width, double height, double depth, double weight, Date
         {
             return Width * Height * Depth;
         }
+    }
+
+    public Box(int id, double width, double height, double depth, double weight, DateOnly productionDate)
+        : base(id, width, height, depth)
+    {
+        Weight = weight;
+        ProducationDate = productionDate;
+    }
+
+    protected override void CheckSize(double size, string? paramName, string russianParamName)
+    {
+        if (size <= 0)
+            throw new ArgumentOutOfRangeException(paramName, $"Параметр \"{russianParamName}\" у коробки №{ID} должен быть положительным.");
     }
 
     public override string ToString()
