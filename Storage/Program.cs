@@ -69,11 +69,22 @@ class Program
     private static void Exercise1(List<Pallet> pallets)
     {
         Console.WriteLine(BeaitufulDelimiter);
-        Console.WriteLine($"Задание №1: отсортированные по возрастанию срока годности, а затем по весу");
+        Console.WriteLine("Задание №1: cгрупированные по сроку годности паллеты, отсортированные по возрастанию срока годности, ");
+        Console.WriteLine("а внутри каждой группы по весу");
         Console.WriteLine(BeaitufulDelimiter);
 
-        var palletsForEx1 = pallets.OrderBy(x => x.ExpirationDate).ThenBy(x => x.Weight).ToList();
-        WritePalletsInformation(palletsForEx1);
+        var palletsForEx1 = pallets.GroupBy(x => x.ExpirationDate).OrderBy(x => x.Key);
+        var groupCount = 1;
+
+        foreach(var palletsGroup in palletsForEx1)
+        {
+            Console.WriteLine($"***Группа №{groupCount} со сроком годности {palletsGroup.Key} (количество паллет: {palletsGroup.Count()}):***");
+            
+            WritePalletsInformation(palletsGroup.OrderBy(x => x.Weight).ToList());
+
+            groupCount++;
+            Console.WriteLine();
+        }
     }
 
     private static void Exercise2(List<Pallet> pallets)

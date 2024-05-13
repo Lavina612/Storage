@@ -71,9 +71,9 @@ class Pallet : StorageUnit
 
     public override string ToString()
     {
-        var palletInformation = new StringBuilder($"Паллета №{ID}: ширина = {Width}, высота = {Height}, глубина = {Depth}, " +
-            $"вес = {Weight}, объём = {Volume}, срок годности = {ExpirationDate}, " +
-            $"коробки:{Environment.NewLine}");
+        var palletInformation = new StringBuilder($"Паллета №{ID}: ширина = {Width}, высота = {Height}, глубина = {Depth}, ");
+        palletInformation.Append($"вес = {Weight}, объём = {Volume}, срок годности = {ExpirationDate}, коробки:{Environment.NewLine}");
+
         foreach (Box box in Boxes)
         {
             palletInformation.Append('\t').Append(box.ToString()).Append(Environment.NewLine);
