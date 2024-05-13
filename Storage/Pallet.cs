@@ -48,18 +48,11 @@ class Pallet : StorageUnit
         {
             return Boxes.Select(x => x.ExpirationDate).DefaultIfEmpty().Min();
         }
-        set
-        {
-            throw new ArgumentOutOfRangeException(nameof(ExpirationDate), 
-                $"Срок годности паллеты №{ID} вычисляется автоматически на основе вложенных коробок, его нельзя изменить.");
-        }
     }
 
     public Pallet(int id, double width, double height, double depth, List<Box> boxes) 
         : base(id, width, height, depth)
     {
-        Width = width;
-        Depth = depth;
         Boxes = boxes ?? [];
     }
 

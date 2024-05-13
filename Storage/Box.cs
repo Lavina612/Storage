@@ -2,20 +2,16 @@
 
 class Box : StorageUnit
 {
-    private DateOnly ProducationDate { get; set; }
-    private DateOnly expirationDate;
+    
+    private readonly DateOnly expirationDate;
+
+    private DateOnly ProducationDate { get; }
 
     public override DateOnly ExpirationDate
     {
         get
         {
-            return expirationDate == DateOnly.MinValue ? ProducationDate.AddDays(100) : expirationDate;
-        }
-        set
-        {
-            if (value < ProducationDate)
-                throw new ArgumentOutOfRangeException(nameof(ExpirationDate), $"Срок годности коробки №{ID} не может быть меньше даты производства.");
-            expirationDate = value;
+            return expirationDate;
         }
     }
 
@@ -27,11 +23,12 @@ class Box : StorageUnit
         }
     }
 
-    public Box(int id, double width, double height, double depth, double weight, DateOnly productionDate)
+    public Box(int id, double width, double height, double depth, double weight, DateOnly productionDate, DateOnly? expirationDate = null)
         : base(id, width, height, depth)
     {
         Weight = weight;
         ProducationDate = productionDate;
+        this.expirationDate = expirationDate ?? ProducationDate.AddDays(100);
     }
 
     protected override void CheckSize(double size, string? paramName, string russianParamName)
@@ -42,7 +39,6 @@ class Box : StorageUnit
 
     public override string ToString()
     {
-        return $"Коробка №{ID}: ширина = {Width}, высота = {Height}, глубина = {Depth}, " +
-            $"вес = {Weight}, объём = {Volume}, срок годности = {ExpirationDate}";
+        return $"Коробка №{ID}: ширина = {Width}, высота = {Height}, глубина = {Depth}, вес = {Weight}, объём = {Volume}, срок годности = {ExpirationDate}";
     }
 }

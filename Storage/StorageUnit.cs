@@ -2,51 +2,15 @@
 
 abstract class StorageUnit
 {
-    private double width;
-    private double height;
-    private double depth;
     private double weight;
 
     public int ID { get; }
 
-    public double Width
-    {
-        get
-        {
-            return width;
-        }
-        set
-        {
-            CheckSize(value, nameof(Width), "ширина");
-            width = value;
-        }
-    }
+    public double Width { get; }
 
-    protected double Height
-    {
-        get
-        {
-            return height;
-        }
-        set
-        {
-            CheckSize(value, nameof(Height), "высота");
-            height = value;
-        }
-    }
+    protected double Height { get; }
 
-    public double Depth
-    {
-        get
-        {
-            return depth;
-        }
-        set
-        {
-            CheckSize(value, nameof(Depth), "глубина");
-            depth = value;
-        }
-    }
+    public double Depth { get; }
 
     public virtual double Weight
     {
@@ -63,13 +27,19 @@ abstract class StorageUnit
 
     public abstract double Volume { get; }
 
-    public abstract DateOnly ExpirationDate { get; set; }
+    public abstract DateOnly ExpirationDate { get; }
 
     public StorageUnit(int id, double width, double height, double depth)
     {
         ID = id;
+
+        CheckSize(width, nameof(Width), "ширина");
         Width = width;
+
+        CheckSize(height, nameof(Height), "высота");
         Height = height;
+
+        CheckSize(depth, nameof(Depth), "глубина");
         Depth = depth;
     }
 
