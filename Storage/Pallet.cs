@@ -21,10 +21,10 @@ class Pallet : StorageUnit
         SetBoxes(boxes);
     }
 
-    protected override void CheckSize(double size, string? paramName, string russianParamName)
+    protected override void CheckSize(double size, string paramName)
     {
         if (size <= 0)
-            throw new ArgumentOutOfRangeException(paramName, $"Параметр \"{russianParamName}\" у палеты №{ID} должен быть положительным.");
+            throw new ArgumentOutOfRangeException(paramName, $"Параметр \"{ParamLocalizedNames[paramName]}\" у палеты №{ID} должен быть положительным.");
     }
 
     public ReadOnlyCollection<Box> GetBoxes()
@@ -47,10 +47,8 @@ class Pallet : StorageUnit
     {
         if (box != null)
         {
-            if (box.Width > Width)
-                throw new ArgumentOutOfRangeException(nameof(box.Width), $"Ширина коробки №{box.ID} не должна превышать ширину паллеты №{ID}.");
-            if (box.Depth > Depth)
-                throw new ArgumentOutOfRangeException(nameof(box.Depth), $"Глубина коробки №{box.ID} не должна превышать глубину паллеты №{ID}.");
+            if (box.Width > Width || box.Width > Depth || box.Depth > Depth || box.Depth > Width)
+                throw new ArgumentOutOfRangeException(nameof(box), $"Размеры коробки №{box.ID} не должны превышать размер паллеты №{ID} (ширина и глубина).");
             boxes.Add(box);
         }
     }

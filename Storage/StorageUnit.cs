@@ -4,6 +4,14 @@ abstract class StorageUnit
 {
     private double weight;
 
+    protected static Dictionary<string, string> ParamLocalizedNames = new()
+    {
+        { nameof(Width), "ширина"},
+        { nameof(Height), "высота"},
+        { nameof(Depth), "глубина"},
+        { nameof(Weight), "вес"}
+    };
+
     public int ID { get; }
 
     public double Width { get; }
@@ -20,7 +28,7 @@ abstract class StorageUnit
         }
         set
         {
-            CheckSize(value, nameof(Weight), "вес");
+            CheckSize(value, nameof(Weight));
             weight = value;
         }
     }
@@ -33,15 +41,15 @@ abstract class StorageUnit
     {
         ID = id;
 
-        CheckSize(width, nameof(Width), "ширина");
+        CheckSize(width, nameof(Width));
         Width = width;
 
-        CheckSize(height, nameof(Height), "высота");
+        CheckSize(height, nameof(Height));
         Height = height;
 
-        CheckSize(depth, nameof(Depth), "глубина");
+        CheckSize(depth, nameof(Depth));
         Depth = depth;
     }
 
-    protected abstract void CheckSize(double size, string? paramName, string russianParamName);
+    protected abstract void CheckSize(double size, string paramName);
 }

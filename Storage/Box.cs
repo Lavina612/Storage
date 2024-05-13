@@ -31,10 +31,10 @@ class Box : StorageUnit
         this.expirationDate = expirationDate ?? ProducationDate.AddDays(100);
     }
 
-    protected override void CheckSize(double size, string? paramName, string russianParamName)
+    protected override void CheckSize(double size, string paramName)
     {
         if (size <= 0)
-            throw new ArgumentOutOfRangeException(paramName, $"Параметр \"{russianParamName}\" у коробки №{ID} должен быть положительным.");
+            throw new ArgumentOutOfRangeException(paramName, $"Параметр \"{ParamLocalizedNames[paramName]}\" у коробки №{ID} должен быть положительным.");
     }
 
     public override string ToString()

@@ -57,9 +57,9 @@ class Program
             ];
 
         List<Pallet> pallets = [
-            new(1, 40, 55, 45, boxesForFirstPallet),
-            new(2, 50, 60, 40, boxesForSecondPallet),
-            new(3, 35, 65, 55, boxesForThirdPallet),
+            new(1, 60, 55, 45, boxesForFirstPallet),
+            new(2, 70, 60, 50, boxesForSecondPallet),
+            new(3, 55, 65, 55, boxesForThirdPallet),
             new(4, 55, 55, 45, boxesForFourthPallet)
             ];
 
