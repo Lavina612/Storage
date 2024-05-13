@@ -73,7 +73,7 @@ class Program
         Console.WriteLine("а внутри каждой группы по весу");
         Console.WriteLine(BeaitufulDelimiter);
 
-        var palletsForEx1 = pallets.GroupBy(x => x.ExpirationDate).OrderBy(x => x.Key);
+        var palletsForEx1 = pallets.Where(x => x.GetBoxes().Count > 0).GroupBy(x => x.ExpirationDate).OrderBy(x => x.Key);
         var groupCount = 1;
 
         foreach(var palletsGroup in palletsForEx1)
@@ -93,7 +93,8 @@ class Program
         Console.WriteLine($"Задание №2: {PalletCountForEx2} паллеты с коробками с наибольшим сроком годности, отсортированные по возрастанию объёма");
         Console.WriteLine(BeaitufulDelimiter);
 
-        var palletsForEx2 = pallets.OrderByDescending(x => x.Boxes.Select(x => x.ExpirationDate).DefaultIfEmpty().Max())
+        var palletsForEx2 = pallets.Where(x => x.GetBoxes().Count > 0)
+            .OrderByDescending(x => x.GetBoxes().Select(x => x.ExpirationDate).DefaultIfEmpty().Max())
             .ThenBy(x => x.Volume).Take(PalletCountForEx2).ToList();
         WritePalletsInformation(palletsForEx2);
     }
