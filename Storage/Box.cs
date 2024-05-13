@@ -7,21 +7,9 @@ class Box : StorageUnit
 
     private DateOnly ProducationDate { get; }
 
-    public override DateOnly ExpirationDate
-    {
-        get
-        {
-            return expirationDate;
-        }
-    }
+    public override DateOnly ExpirationDate => expirationDate;
 
-    public override double Volume
-    {
-        get
-        {
-            return Width * Height * Depth;
-        }
-    }
+    public override double Volume => Width * Height * Depth;
 
     public Box(int id, double width, double height, double depth, double weight, DateOnly productionDate, DateOnly? expirationDate = null)
         : base(id, width, height, depth)
