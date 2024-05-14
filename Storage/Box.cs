@@ -2,7 +2,8 @@
 
 class Box : StorageUnit
 {
-    
+    private const int ExpirationDays = 100;
+
     private readonly DateOnly expirationDate;
 
     private DateOnly ProducationDate { get; }
@@ -16,7 +17,7 @@ class Box : StorageUnit
     {
         Weight = weight;
         ProducationDate = productionDate;
-        this.expirationDate = expirationDate ?? ProducationDate.AddDays(100);
+        this.expirationDate = expirationDate ?? ProducationDate.AddDays(ExpirationDays);
     }
 
     protected override void CheckSize(double size, string paramName)
