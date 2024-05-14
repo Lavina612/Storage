@@ -69,7 +69,7 @@ class Program
     private static void Exercise1(List<Pallet> pallets)
     {
         Console.WriteLine(BeaitufulDelimiter);
-        Console.WriteLine("Задание №1: cгрупированные по сроку годности паллеты, отсортированные по возрастанию срока годности, ");
+        Console.WriteLine("Задание №1: cгруппированные по сроку годности паллеты, отсортированные по возрастанию срока годности, ");
         Console.WriteLine("а внутри каждой группы по весу");
         Console.WriteLine(BeaitufulDelimiter);
 

@@ -6,7 +6,7 @@ class Box : StorageUnit
 
     private readonly DateOnly expirationDate;
 
-    private DateOnly ProducationDate { get; }
+    private DateOnly ProductionDate { get; }
 
     public override DateOnly ExpirationDate => expirationDate;
 
@@ -16,8 +16,8 @@ class Box : StorageUnit
         : base(id, width, height, depth)
     {
         Weight = weight;
-        ProducationDate = productionDate;
-        this.expirationDate = expirationDate ?? ProducationDate.AddDays(ExpirationDays);
+        ProductionDate = productionDate;
+        this.expirationDate = expirationDate ?? ProductionDate.AddDays(ExpirationDays);
     }
 
     protected override void CheckSize(double size, string paramName)
