@@ -9,7 +9,8 @@ abstract class StorageUnit
         { nameof(Width), "ширина"},
         { nameof(Height), "высота"},
         { nameof(Depth), "глубина"},
-        { nameof(Weight), "вес"}
+        { nameof(Weight), "вес"},
+        { nameof(ExpirationDate), "срок годности" }
     };
 
     public int ID { get; }

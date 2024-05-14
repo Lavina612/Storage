@@ -17,7 +17,16 @@ class Box : StorageUnit
     {
         Weight = weight;
         ProductionDate = productionDate;
-        this.expirationDate = expirationDate ?? ProductionDate.AddDays(ExpirationDays);
+
+        if (expirationDate != null)
+        {
+            if (expirationDate < ProductionDate)
+                throw new ArgumentOutOfRangeException(nameof(expirationDate), $"Параметр \"{ParamLocalizedNames[nameof(ExpirationDate)]}\" у коробки №{ID} не может быть раньше даты производства.");
+            else
+                this.expirationDate = (DateOnly)expirationDate;
+        }
+        else
+            this.expirationDate = ProductionDate.AddDays(ExpirationDays);
     }
 
     protected override void CheckSize(double size, string paramName)
